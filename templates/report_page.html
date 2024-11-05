@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report for {{ program_code }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Report for Program Code: {{ program_code }}</h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% else %}
+            <p>Your report is being generated. Please check back later.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

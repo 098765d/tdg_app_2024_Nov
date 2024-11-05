@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Analysis Report</title>
+
+    <!-- Use Flask's url_for to reference static CSS -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+    
+    <!-- Add Font Awesome for icons if needed -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <img src="https://github.com/098765d/dualPredictor/blob/main/img/EdUHK_Signature_RGB.png?raw=true" alt="Logo" class="logo">
+            <div class="header-title">
+                <h1>Program Analysis Report - {{ program_code }}</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Report Title -->
+        <h2>Program: {{ program_code }} {{ program_name_abb }}</h2>
+
+
+
+        <!-- Introductory Description -->
+        <p>
+            This report focuses on identifying at-risk students in undergraduate (UG) programs offered by EdUHK. The analysis uses academic data such as GPAs, course grades, scholarships, and extracurricular activities from past cohorts to help program leaders understand which factors most strongly influence academic performance.
+            The system predicts students likely to receive a degree classification of Third-Class Honours or below (GPA < 2.5) based on their academic performance in the first 2 years. By leveraging data from the Office of the Chief Information Officer (OCIO), program leaders are provided with a list of at-risk students shortly after the release of 2nd year GPA.
+            By identifying at-risk students early, program leaders can implement necessary support measures to improve academic outcomes before students reach the final stages of their program.
+        </p>
+
+        
+
+        <!-- Outline Section -->
+        <div class="outline">
+            <h3>Report Outline</h3>
+            <ul>
+                <li><strong>Part 1: Model Evaluation on Historical Cohorts</strong> - Provides a comprehensive assessment of the model's performance based on data from previous cohorts. The model uses Year 1 and Year 2 data to predict Year 3 GPAs and its performance is rigorously evaluated by comparing these predicted GPAs against the actual GPAs. 
+                    This rigorous assessment helps to establish the model's accuracy and reliability, with findings presented through various metrics and visualizations.</li>
+                <li><strong>Part 2: Model Predictions for the Latest Second-Year Completion Cohort</strong> - This section applies the model to the most recent cohort of students who have just completed Year 2. 
+                    Using their Year 1 and Year 2 data, the model forecasts their Year 3 GPAs, identifying students potentially at risk. 
+                    This proactive analysis is crucial for implementing timely intervention strategies.</li>
+            </ul>
+        </div>
+
+        <!-- Model Evaluation Section -->
+        <div class="section">
+            <h3>Part 1: Model Performance on Historical Cohorts</h3>
+            <p>
+                This section highlights the model's performance on the training dataset, developed using data from previous cohorts. The primary goal is to assess the model's accuracy and reliability in predicting student outcomes. The evaluation metrics and visualizations provide a detailed assessment of the model's predictive power and overall effectiveness.
+            </p>
+            <!-- Key Evaluation Metrics Table -->
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                </tr>
+                {% for key, value in evaluation_summary.items() %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            
+            <p>This section shows impactful courses where student course grades are strongly associated with their Year 3 GPA. 
+                The association is measured using a <a href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient" target="_blank" rel="noopener noreferrer">Pearson correlation coefficient</a>; 
+                only courses with a coefficient of 0.5 or greater are listed here. An empty section indicates that no such strong associations were found.</p>
+            <!-- Correlated Courses Table -->
+            <table>
+                <tr>
+                    <th>Course Code</th>
+                    <th>Correlation</th>
+                </tr>
+                {% for course, correlation in correlated_courses.items() %}
+                <tr>
+                    <td>{{ course }}</td>
+                    <td>{{ correlation }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+           <!-- Model Evaluation Visuals -->
+           <h3>Visual Representation of Model Performance</h3>
+           <p>
+               The charts below visually represent the model's effectiveness in predicting student outcomes based on the training data. These plots help in understanding the model's performance and identifying areas for improvement.
+           </p>
+           <div class="img-container">
+                <div class="plot">
+                    <!-- Base64 encoded confusion matrix image -->
+                    <img src="data:image/png;base64,{{ confusion_matrix_img_base64 }}" alt="Confusion Matrix">
+                    <div class="figure-label">Figure 1</div>
+                    <p class="caption"><strong>Confusion Matrix:</strong> This chart shows the performance of the model in classifying students as either "Normal" or "At-risk." 
+                        It compares the predicted classifications (columns) with the actual classifications (rows). 
+                        A higher number in the diagonal boxes means the model is correctly predicting students' statuses.
+                        This matrix provides a clear way to assess the accuracy of the model in distinguishing between at-risk students and those performing normally.</p>
+                </div>
+                <div class="plot">
+                    <!-- Base64 encoded feature importance image -->
+                    <img src="data:image/png;base64,{{ feature_importance_img_base64 }}" alt="Feature Importance">
+                    <div class="figure-label">Figure 2</div>
+                    <p class="caption"><strong>Feature Importance:</strong> This bar chart displaying the top 5 predictors, it ranks them by coefficient magnitude, where positive values indicate a direct relationship with higher Year 3 GPA.
+                        Typically, the most recent year's GPA is the most influential predictor.
+                        Negative coefficients, on the other hand, signify an inverse relationship with Year 3 GPA, where higher predictor values correlate with lower predicted GPA
+                        (If the chart displays fewer than 5 features, this indicates that the LASSO model has effectively reduced the number of significant predictors to less than five. 
+                        All selected features are shown in the figure).
+                    </p>
+                </div>
+                <div class="plot">
+                    <!-- Base64 encoded scatter plot image -->
+                    <img src="data:image/png;base64,{{ scatter_plot_img_base64 }}" alt="Scatter Plot">
+                    <div class="figure-label">Figure 3</div>
+                    <p class="caption"><strong>Actual vs Predicted Y3.GPA Plot:</strong> This scatter plot illustrates the accuracy of the model's GPA predictions.
+                        Each dot represents a student's actual GPA compared to the predicted GPA. 
+                        Dots close to the diagonal line indicate accurate predictions, showing the model's reliability.</p>
+                </div>
+            </div>
+           <p>
+            For a detailed explanation of each predictor in Figure 2, please refer to the <a href="https://uedhk-my.sharepoint.com/:x:/g/personal/cdong_eduhk_hk/EUbvksPj8_lKhqz1XnQNlXwBOG1G02poMNlP9qnxCqKMzA?e=vyS2bV" download>Variable Explanation</a> document.
+            </p>
+        </div>
+
+        <!-- Predictions Summary Section -->
+        <div class="section">
+            <h3>Part 2: Model Predictions for the Latest Second-Year Completion Cohort</h3>
+            <p>
+                Building on the proven accuracy of the model with the training data, we have applied it to forecast the Year 3 GPA (Y3.GPA) of students in the most recent cohort, who have just completed their second year. 
+                By forecasting their future academic performance, we can identify students who may be at risk of underperforming and provide timely support and interventions before graduation.
+            </p>
+            <p>
+                Key results of the predictions are summarized below, and detailed individual predictions can be found in the downloadable Excel file at the end of this section.
+            </p>
+            
+            
+            <table>
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                </tr>
+                {% for key, value in prediction_summary.items() %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <!-- Detailed Prediction Results Section -->
+            <h3>Detailed Prediction Results (Y3 GPA Prediction)</h3>
+            <p>
+                For a comprehensive view of individual student predictions, please refer to the separate Excel file provided. The file includes the following key columns:
+            </p>
+            <ul>
+                <li><strong>Y3.GPA_prediction</strong>: This column contains the predicted Year 3 GPA for each student.</li>
+                <li><strong>at_risk_prediction</strong>: This column indicates the at-risk status of each student. A value of <strong>TRUE</strong> means the student is predicted to be at-risk, while <strong>FALSE</strong> means the student is predicted to perform normally.</li>
+            </ul>
+            <p>
+                For a detailed explanation of each column in the Excel file, please refer to the <a href="https://uedhk-my.sharepoint.com/:x:/g/personal/cdong_eduhk_hk/EUbvksPj8_lKhqz1XnQNlXwBOG1G02poMNlP9qnxCqKMzA?e=vyS2bV" download>Variable Explanation</a> document document that was shared along with the report.
+            </p>
+
+            <p>
+                To ensure confidentiality, students are identified by masked pseudo-IDs in the Excel file. 
+                To match these IDs with actual student identities, please contact the OCIO by sending the masked pseudo-IDs to Kevin Cheung (<a href="mailto:kywcheung@eduhk.hk">kywcheung@eduhk.hk</a>) to request the corresponding actual student IDs.
+            </p>
+
+            <h4>Next Steps:</h4>
+            <ul>
+                <li>Download the detailed predictions file (Excel).</li>
+                <li>Contact OCIO to convert the pseudo-IDs to actual IDs. An email template you can use to request the conversion of pseudo-IDs to actual student IDs</li>
+                <div style="border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9;">
+                    <p><strong>Subject:</strong> Request for Conversion of Masked Pseudo-IDs to Actual Student IDs.</p>
+                    <p>Dear OCIO Colleagues,</p>
+                    <p>
+                        I am the program leader for <strong>[Program Code]</strong> that is part of the TDG project analysis.
+                        I would like to request your assistance in converting the masked pseudo-IDs in the <strong>attached Excel file</strong> to actual student IDs for further analysis.
+                    </p>
+                    <p>
+                        Thank you for your help
+                    </p>
+                    <p>BR,<br>[Your Name]
+                </div>
+                <li>Consider implementing interventions to support the students identified as at-risk.</li>
+                <li>Complete the feedback form within one month of receiving this report.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Glossary Section -->
+    <div class="glossary">
+        <h3>Glossary</h3>
+        <ul>
+            <li><strong>Target Column</strong>:  The model prediction target (Y3 GPA)</li>
+            <li><strong>At-risk student</strong>: A student who is predicted to achieve a GPA below a cutoff point (defaulted to 2.50) at the end of Year 3. The cutoff is determined by the model to optimize prediction accuracy but is generally set at 2.5.</li>
+            <li><strong>Accuracy</strong>: The proportion of correct predictions made by the model, calculated by dividing the number of accurate predictions by the total number of students. The model's accuracy typically ranges between 90% and 100%, depending on the dataset.</li>
+            <li><strong>Miss detect</strong>: A case where a student is predicted to be normal (GPA above the cutoff of 2.5) but actually achieves a GPA at or below 2.50.</li>
+            <li><strong>False alarm</strong>: A case where a student is predicted to be at-risk (GPA below the cutoff of 2.5) but actually achieves a GPA above 2.50.</li>
+            <li><strong>Cut-Off</strong>: A predetermined GPA threshold (2.5) used to classify students as at-risk or normal. This cutoff may be optimized by the model to minimize prediction errors.</li>
+            <li><strong>Optimal Cut-Off</strong>: The GPA threshold determined by the model that best separates at-risk students from normal students, optimized to minimize the number of missed detections and false alarms. While the default is 2.5, the model may adjust this cutoff for optimal performance.</li>
+            <li><strong>Cohort</strong>: A group of students who began their program in a specific academic year. For example, the 2016 cohort refers to students who started their first year in 2016.</li>
+            <li><strong>Cohort Size</strong>: The total number of students in a specified cohort. For example, the 2016 cohort consists of 35 students in this programme.</li>
+            <li><strong>MSE (Mean Squared Error)</strong>: A measure of the average squared difference between the predicted and actual GPA values. A lower MSE indicates better model performance.</li>
+        </ul>
+    </div>
+    
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <p><strong>TDG Project</strong> - An automated platform for early identification of at-risk students</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
+
+<style>
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 20; 
+        padding: 20; 
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    /* Header Styles */
+    .header-container {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center;
+        background-color: #ffffff; /* Light color for the header */
+        padding: 10px 30px;
+        border-bottom: 3px solid #7bb29c; /* Subtle green border for separation */
+        position: relative; /* For positioning the logout button */
+    }
+
+    /* Logo Container */
+    .logo-container {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 10px 10px; /* Add padding values as needed */
+    }
+
+    /* Logo Image */
+    .logo {
+        height: 75px; /* Increased logo size for better visibility */
+        width: auto;
+    }
+
+
+    /* Header Title */
+    .header-title {
+        text-align: center; /* Center-align the text */
+        flex-grow: 1; /* Take up remaining space */
+    }
+
+    .header-title h1 {
+        color: #004b2d; /* University green for the title text */
+        font-size: 24px; /* Slightly increased font size */
+        margin: 0; /* Remove default margin */
+    }
+
+    /* Footer Styles */
+    footer {
+        background-color: white;
+        padding: 10px 0;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    footer p {
+        font-size: 14px;
+        color: #004b2d;
+        margin: 0;
+    }
+
+    /* Styles for Report Template */
+    .section {
+        margin-bottom: 30px;
+        background-color: #ffffff;
+        padding: 20px; /* Increased padding for better spacing */
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Slightly increased shadow for depth */
+        border-left: 4px solid #004b2d; /* Added a left border in university green */
+    }
+
+    .section h3 {
+        text-align: left;
+        margin-top: 0;
+        color: #004b2d; /* University green for headings */
+        font-size: 22px; /* Slightly increased font size */
+        margin-bottom: 15px; /* Added margin below heading for spacing */
+    }
+
+    .table-container {
+        overflow-x: auto;
+        align-self: center;
+        align-items: center;
+        margin-bottom: 20px;
+        border: 2px solid #ddd; /* Border around the table container */
+        border-radius: 8px; /* Rounded corners for container */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Added shadow for the container */
+    }
+
+    table {
+        width: 50%;
+        align-self: center;
+        border-collapse: collapse;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border: 2px solid #ddd; /* Border for the table */
+        border-radius: 8px; /* Rounded corners for the table */
+        overflow: hidden; /* Ensures border-radius is visible */
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px; /* Increased padding for readability */
+        font-size: 16px; /* Slightly increased font size for better readability */
+    }
+
+    th {
+        background-color: #004b2d; /* University green for table header */
+        color: #ffffff; /* White text for table header */
+    }
+
+    .img-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 0;
+    }
+
+    .img-container .plot {
+        flex: 1 1 30%;
+        margin: 15px; /* Increased margin for better spacing */
+        text-align: center;
+    }
+
+    .img-container img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ddd;
+        padding: 5px;
+        background-color: #fff;
+        border-radius: 8px; /* Rounded corners for images */
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* Increased shadow for depth */
+    }
+
+    .img-container p {
+        font-size: 16px; /* Increased font size */
+        color: #333; /* Darker text color for better visibility */
+        margin-top: 8px; /* Adjusted margin for spacing */
+    }
+
+    .caption {
+        font-size: 16px; /* Increased font size for captions */
+        color: #555; /* Slightly darker text color */
+        text-align: center;
+        margin-top: 5px;
+        font-style: italic;
+    }
+
+    .figure-label {
+        font-size: 16px; /* Increased font size */
+        color: #004b2d; /* University green for figure labels */
+        text-align: center;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .button-container {
+        text-align: center;
+        margin: 30px 0; /* Increased margin for better spacing */
+    }
+
+    .download-button {
+        background-color: #004b2d; /* University green */
+        color: white;
+        padding: 14px 28px; /* Increased padding for a larger button */
+        text-decoration: none;
+        font-size: 18px; /* Increased font size */
+        border-radius: 8px; /* Rounded corners for button */
+        transition: background-color 0.3s;
+        display: inline-block;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Added shadow for depth */
+    }
+
+    .download-button:hover {
+        background-color: #007b4b; /* Lighter green for hover effect */
+    }
+
+    .report-date {
+        text-align: right;
+        font-size: 16px; /* Increased font size */
+        color: #333; /* Darker text color for visibility */
+        margin-bottom: 20px;
+        font-style: italic; /* Italicized for emphasis */
+    }
+
+    /* Two-column layout for the content section */
+    .content-section {
+        display: flex;
+        justify-content: space-between; /* Spread the two columns */
+        padding: 60px 20px;
+        background-color: #f9fafb;
+        border-bottom: 3px solid #004b2d;
+    }
+
+    .content-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        gap: 40px; /* Adds space between the columns */
+    }
+
+    /* Left Column: Logout Section */
+    .logout-column {
+        flex: 1;
+        padding-right: 20px;
+    }
+
+    .logout-column h1 {
+        color: #004b2d; /* University green */
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    .goodbye-text {
+        font-size: 18px;
+        color: #333;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    .logo {
+        height: 50px; /* Adjust size as needed */
+        width: auto;
+        padding: auto;
+    }
+
+</style>
+

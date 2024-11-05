@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TDG Project: Program Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Load MathJax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js" async></script>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-top">
+            <img src="https://github.com/098765d/dualPredictor/blob/main/img/EdUHK_Signature_RGB.png?raw=true" alt="Logo" class="logo">
+            <h1>Program Analysis: An Automated Platform for Early Identification of At-risk Students</h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="report_portal.html"><i class="fa fa-file-alt"></i> Report Portal</a></li>
+            <li><a href="about_us.html"><i class="fa fa-user"></i> About Us</a></li>
+            <li><a href="user_guide.html"><i class="fa fa-book"></i> User Guide</a></li>
+        </ul>
+    </nav>
+    
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="content-container">
+            <h2>Introduction</h2>
+            <p>This project (<a href="https://app.lib.eduhk.hk/tl/node/407">TDG:T0282</a>) lies in its potential to enhance the quality assurance and enhancement (QA&E) processes for reasonably sized UG programs at EdUHK. Here, a student is regarded as at-risk if he /she is predicted to receive a CGPA of 2.5 or lower in Year 3. By identifying at-risk students early on, program leaders can implement targeted interventions to support struggling students, ultimately improving their chances of success. In order to develop predictions of students’ CGPAs, data on a large set of variables is needed. Note that student data are anonymised using alphanumeric pseudo-IDs that mask the identities of students.</p>
+            <p>We have developed a web application that facilitates the analysis and allows program leaders to view results directly. As soon as second-year results are available each August, our system identifies at-risk students, using comprehensive, anonymized datasets to ensure accuracy and privacy. Identified students are listed in late September, allowing program leaders to immediately initiate targeted interventions.</p>
+            <p><strong>Project Timeline</strong></p>
+            <p>The project timeline, extending from 2024 to 2026, comprehensively outlines the key data collection points and result delivery phases for three student cohorts. The initial phase in 2024 will introduce semi-automated reporting for the 2022 cohort, where results are made available through a secure drive with password-protected access for each program report. For the 2023 and 2024 cohorts, results will be delivered via a fully automated web application, streamlining the process for ease of access and efficiency. Looking forward, from the 2025 cohort onwards, as EdUHK transitions to double-degree programs, these subsequent cohorts will be analyzed under a separate CRAC project aimed at further enhancing educational strategies and outcomes.</p>
+
+            <figure>
+                <img src="https://github.com/098765d/dualPredictor/blob/main/img/tdg_timeline.png?raw=true" alt="TDG Project Timeline from 2022 to 2027">
+                <figcaption>Figure 1: TDG Project Timeline - Key Phases from 2024 to 2026.<br>(Each cohort, such as the 2022 cohort, represents students who entered the program in that specific year)</figcaption>
+
+            </figure>
+
+        </div>
+    </section>
+
+
+    <!-- Additional Section for Methodology -->
+    <section class="content-section">
+        <div class="content-container">
+            <h2>Methodology</h2>
+            <p>Our methodology employs a systematic approach to proactively identify at-risk students within four or five-year undergraduate programs at EdUHK. By analyzing data collected from the university, we utilize a lasso regression model to develop predictive models after the second year of academic progress. These models specifically forecast which students are likely to graduate with a GPA below 2.50, enabling early and targeted interventions that improve student outcomes and the overall effectiveness of the programs.</p>
+
+            <p>To refine the accuracy of our predictions, we use the <a href="https://scikit-learn.org/stable/modules/linear_model.html#lasso">Lasso regression</a> technique, combined with the <a href="https://en.wikipedia.org/wiki/Youden%27s_J_statistic">Youden’s index</a> to adjust our identification thresholds. This method ensures a balance between sensitivity and specificity, thereby reducing the risk of false positives and negatives. This strategic approach allows for more precise, timely assessments, providing academic staff with the insights needed to implement effective support strategies for students at critical junctures in their academic careers.</p>
+            <p>The predictive model focuses on two primary outcomes:</p>
+            <ul>
+                <li><strong>Y3.GPA Prediction:</strong> This is the direct estimation of a student’s GPA at the end of Year 3.</li>
+                <li><strong>At-risk Status:</strong> This determines whether a student is considered at-risk based on the predicted Y3.GPA and a tunned cut-off threshold. if Y3.GPA Prediction <= tunned cut-off it will be predicted at-risk students</li>
+            </ul>
+            <p>To achieve these goals, we follow a three-step process:</p>
+
+            <h3>Step 1: Y3 GPA Prediction</h3>
+            <p>We use the trained lasso regression model \( f(x) \) to predict the Year 3 GPA for each student:</p>
+            <p>\[
+            Y3.GPA_{\text{prediction}} = y_{\text{pred}} = f(x) = \sum_{j=1}^{M} w_j x_j + b
+            \]</p>
+
+            <h3>Step 2: Determining the Optimal Cut-off</h3>
+            <p>We apply the Youden's Index to find the most optimal cut-off for classifying students as at-risk. This optimizes our ability to accurately identify students who need intervention:</p>
+            <p>\[
+            \text{optimal_cut_off} = \arg\max_c \left[ \frac{TP}{TP + FN} + \frac{TN}{TN + FP} - 1 \right]
+            \]</p>
+            
+            <ul>
+                <li><strong>c</strong>: The tuned cut-off that determines whether a student is labeled as at-risk (default cut-off=2.5).</li>
+                <li><strong>y_true_label</strong>: The true label of the student based on the default cut-off, indicating whether they are at-risk (1) or not (0).</li>
+                <li><strong>y_pred_label</strong>: The predicted label of the student based on the tuned cut-off value, determining their at-risk status.</li>
+                <li><strong>y_pred</strong>: The predicted Year 3 GPA for a student.</li>
+                <li><strong>x_j</strong>: The j-th feature of the student (e.g., previous Year 1, Year 2 GPA, course grades).</li>
+                <li><strong>w_j</strong>: The weight associated with the j-th feature in the regression model.</li>
+                <li><strong>b</strong>: The bias term in the regression equation.</li>
+                <li><strong>M</strong>: The total number of features considered in the model.</li>
+                <li><strong></strong>True positives (TP), true negatives (TN), false positives (FP), and false negatives (FN)</strong> are calculated based on the the predicted at-risk status and the actual at-risk status from the training dataset.</li>
+            </ul>
+
+            <h3>Step 3: Determining the At-Risk Status</h3>
+            <p>Based on the optimal cut-off and the predicted Y3 GPA, we classify students as 'at-risk' if their GPA falls below the threshold, and 'not at-risk' if it does not.</p>
+            <p>\[
+            at-risk_{\text{prediction}} = y_{\text{pred_label}} = \begin{cases} 
+            \text{"At-risk"} & \text{if } y_{\text{pred}} < \text{optimal_cut_off} \\
+            \text{"not at-risk"} & \text{if } y_{\text{pred}} \geq \text{optimal_cut_off}
+            \end{cases}
+            \]</p>
+            
+            <p>After predictions are completed, the report for each specific program becomes available for program leaders to review, as illustrated in the workflow diagram (Figure 2) below.</p>
+
+            <figure>
+                <img src="https://github.com/098765d/dualPredictor/blob/main/img/tdg_method.png?raw=true" alt="Workflow of the Program Analysis Web App">
+                <figcaption>Figure 2: Workflow of the Program Analysis Web App - From Data Collection to User Engagement</figcaption>
+            </figure>
+
+        </div>
+    </section>
+
+    <!-- Proven Impact Section -->
+    <section class="content-section">
+        <div class="content-container">
+            <h2>Past Performance</h2>
+            <p>The methodology has applied on 7 five-year BEd programmes, 5 four-year BA or BSocSc programmes, and 2 two-year degree programmes at EdUHK using data spanning from the 2012/13 Academic Year to 2023, our predictive analytics have achieved:
+            <ul>
+                <li><strong>High Accuracy:</strong> An average accuracy of 98.6% per year in identifying at-risk students.</li>
+                <li><strong>Low Missed Detection Rate:</strong> Only 2.1% (15 out of a total of 4,751 students tested), showcasing our model's effectiveness in identifying students needing intervention.</li>
+                <li><strong>Low False Alarms:</strong> Maintained at 8.0% (56 out of 4,751), balancing the precision of our predictions.</li>
+            </ul>
+            </p>
+            <p>We also collected feedback from the leaders of the 7 programs regarding their interventions. The table below summarizes the interventions adopted.</p>
+            <table border="1" style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color: #f2f2f2;">
+                        <th>Intervention</th>
+                        <th>Count</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Academic advising</strong> provided to individual students identified as potentially at-risk</td>
+                        <td>6 out of 7</td>
+                        <td>85.7%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Extra learning material</strong> provided to at-risk students</td>
+                        <td>2 out of 7</td>
+                        <td>28.6%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Peer tutors or a TA</strong> provided to (all) students</td>
+                        <td>2 out of 7</td>
+                        <td>28.6%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Supplementary classes</strong> organized</td>
+                        <td>2 out of 7</td>
+                        <td>28.6%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>After-class learning support</strong> includes informal learning activities, talks, internships, etc. to incentivize learning</td>
+                        <td>1 out of 7</td>
+                        <td>14.3%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+    <!-- Back to Top link with an icon -->
+    <a href="#top" id="back-to-top" title="Back to Top">&uarr; Back to Top</a>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <p><strong>TDG Project</strong> - An automated platform for early identification of at-risk students</p>
+        </div>
+    </footer>
+    
+</body>
+</html>
+
+
+<style>
+    /* General Styles for All Pages */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 15px;
+        padding: 15px;
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    /* Header Styles */
+    header {
+        background-color: #ffffff; /* White background for the header */
+        color: #333; /* Dark text for readability */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    }
+
+    .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 20px;
+        background-color: #ffffff;
+    }
+
+    .header-top h1 {
+        font-size: 25px;            /* Larger font size */
+        color: #004b2d;             /* Green color for the text */
+        text-align: center;         /* Center the text */
+        padding: 0px 0px;            /* Padding above and below the text */
+        margin: 0;                  /* Remove any default margin */
+    }
+
+
+    nav {
+        width: auto;
+        background-color: #ffffff; /* Light grey background for nav */
+        padding: 10px 50px; /* Matching horizontal padding with header */
+        border-bottom: 3px solid #7bb29c;
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-around; /* Distributes space evenly around each nav item */
+    }
+
+    nav a {
+        text-decoration: none;
+        color: #004b2d; /* Dark green, consistent with header */
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    nav a:hover {
+        text-decoration: underline;
+    }
+
+    .logo {
+        height: 70px; /* Adjust size as needed */
+        width: auto;
+        padding: auto;
+    }
+
+
+    /* Simplified Content Section Layout */
+    .content-section {
+        display: block; /* Change to block layout for a single column */
+        padding: 20px 20px; /* Adjusted padding */
+        background-color: #f9fafb;
+    }
+
+    .content-container {
+        max-width: 1500px;
+        margin: auto;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+        background: white; /* White background for better contrast */
+        border-radius: 10px; /* Rounded corners */
+    }
+
+    .content-container img {
+        width: 70%; /* Adjust width as necessary */
+        height: auto; /* Maintain aspect ratio */
+        display: block; /* Ensures it sits on its own line */
+        margin: 20px auto; /* Adds vertical spacing and auto margin for horizontal centering */
+    }
+
+    figure {
+        margin: 20px; /* Adds margin around the figure and caption */
+    }
+
+    figcaption {
+        text-align: center; /* Centers the caption text below the image */
+        margin-top: 8px; /* Adds a little space between the image and the caption */
+        font-style: italic; /* Italicizes the caption text */
+        color: #333; /* Sets the color of the caption text, adjust as needed */
+    }
+
+    /* Footer Styles */
+    footer {
+        background-color: white;
+        padding: 10px 0;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    footer p {
+        font-size: 14px;
+        color: #004b2d;
+        margin: 0;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        nav ul {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        nav ul li {
+            margin: 5px 0;
+        }
+    }
+
+    #back-to-top {
+        position: fixed;
+        bottom: 20px;    /* Distance from bottom */
+        right: 20px;     /* Distance from right */
+        padding: 10px 20px;
+        background-color: #004b2d; /* Blue background */
+        color: white;    /* White text */
+        text-decoration: none; /* No underline */
+        border-radius: 5px; /* Rounded corners */
+        font-size: 15px; /* Font size */
+        opacity: 0.7; /* Slightly transparent */
+        font-weight: bold; /* Bold text */
+        transition: opacity 0.3s; /* Smooth transition for hover effect */
+    }
+
+    #back-to-top:hover {
+        opacity: 1; /* Fully opaque on hover */
+    }
+
+    /* Style for tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Select only external links (those starting with http:// or https://)
+        var externalLinks = document.querySelectorAll('a[href^="http"], a[href^="https"]');
+        
+        externalLinks.forEach(function(link) {
+            if (!link.closest('nav')) {
+                link.target = '_blank';
+            }
+        });
+    });
+</script>
+    
+    

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TDG Project: Program Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-top">
+            <img src="https://github.com/098765d/dualPredictor/blob/main/img/EdUHK_Signature_RGB.png?raw=true" alt="Logo" class="logo">
+            <h1>Program Analysis: An Automated Platform for Early Identification of At-risk Students</h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="report_portal.html"><i class="fa fa-file-alt"></i> Report Portal</a></li>
+            <li><a href="about_us.html"><i class="fa fa-user"></i> About Us</a></li>
+            <li><a href="user_guide.html"><i class="fa fa-book"></i> User Guide</a></li>
+        </ul>
+    </nav>
+
+    <section class="content-section">
+        <div class="content-container">
+            <h2>Access the Program Report</h2>
+            <p>Welcome to the Report Portal. Here, you can access the <strong>predictive analysis report for your program’s Year 3 GPA</strong> for the <strong>student who has just completed their Year 2</strong>
+                (our model utilizing both Year 1 and Year 2 data to accurately forecast their Y3.GPA).
+                Explore the insights to better understand and support your students' academic progression.</p>
+
+            <p>Please follow the steps below to access your program report. Each report is password-protected to ensure confidentiality and is accessible only to authorized program leaders:</p>
+            <ul>
+                <li><strong>Select your program:</strong> Click on the corresponding block for your program code from below to view and open the available reports.</li>
+                <div class="report-blocks">
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/ElQt-eEDjRpMqm7hw5E-uU4BrSsZwQMfc9x2-D9vZFPnCQ" target="_blank">A4B067-Chinese</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/Emxetfn_yThDkd2EeqjZyXEB1SsEiooUqhG_C6uhdhFq_w?e=MxnApo" target="_blank">A4B067-English</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EpMpBOasbANIuliGxMZQQ3UBkh5I5wqhHLTCjbIwKncL5A?e=KN0y6D" target="_blank">A4B068-Music</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/ElQy7NLdlClAlWUKF60xK-YBTYOifiVUTvUMY_hhg2Wl-w?e=AnBpDC" target="_blank">A4B068-VisualArts</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/ElR10Fx_Ix9Bk8jMDDT-MIYB5eWt8XJh1_5jDeMO1aQg7g?e=Kh95MX" target="_blank">A4B075</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/Ei_28zFAyfJKoqAJdls7UesB_5WJW7ukHCUeHqV7nKUNLg?e=TnwUin" target="_blank">A4B086</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EtDQNdPlso1PuSf6mS20mdoBodY218pWVmUF8JF8GQNwKw?e=pv6pPh" target="_blank">A5B057</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EgxLBThue6JAn44K_US2XDIBSUihBKfFlZZCS5rwSTKgZA?e=oRowcy" target="_blank">A5B058-GeneralStudies</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/Eo-7b4BCLE5As8oITo3e9jEB4qGPUJa2bTNrtR0vX12yOQ?e=kf0heG" target="_blank">A5B058-Mathematics</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EqXPGKb5gC5GmUuhK5pztSABjuRtiTQqYHoyiMQoif22pg?e=qPVRwx" target="_blank">A5B059</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EouL3YAhvkRFi0vGwcvmQWgB0AeRQBcdBSgwjRRWIBfTnw?e=urZ2jv" target="_blank">A5B060</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EjsMh68K7bhPm6j2VNVizfoB8wXRwreR3NUsPBvTXJlYzw?e=CaeYrq" target="_blank">A5B061</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EtBTsuWa0fNHm_c5RPeALbMBEIr3IHVT1-ANPpph4em-9g?e=4hYdQ6" target="_blank">A5B062</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/Euc58mpvEStHnDLzzjxo-nQBgX36apbyBk8UKwbzYrDPJQ?e=9b078P" target="_blank">A5B077</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EvPw5HX_KrNMriu7tzqfOxEBMdGPbQ8H6RMyli43I1mpYw?e=xwXwFA" target="_blank">A5B079</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EjaS8whlPb9FsaxO1tsSf0IBvXfbK0sFsUzwBzypTymdYQ?e=a9RCbJ" target="_blank">A5B080</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EtZwQqA_7EZFpnXxmukwmjIByZz4BC3jOkTdAc3qO4fwRw?e=5D6wSq" target="_blank">A5B081</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EocDxwVexIpFuq5u0gAQUi0BDopT0Z5ir6Vb7NKwXe2IdA?e=UC1v9D" target="_blank">A5B082</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EmIevXqKb-5LoD_A7BxBtX4BxxswapG_sdOsTtnUMMuBqA?e=yzaKW1" target="_blank">A5B084</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EjO37lPNCLRPi8dDkJhJ4ccBOlfCY7Ipl1ZhnZvqd7eZtQ?e=xAS2Nh" target="_blank">A5B085</a></div>
+                    <div class="report-block"><a href="https://uedhk-my.sharepoint.com/:f:/g/personal/cdong_eduhk_hk/EpjZ6HgthiVLpvapIfZ7gu0BylRmmX-psMCuOrvlspKUFQ">A5BXXX - Demo</a></div>
+                </div>
+                <li><strong>Enter your password:</strong> You will need to enter the unique password provided to you via email to unlock the report. 
+                    For example, if you are the program leader for "A5BXXX" the password you received in your email is "12345" (this is just an example).</li>
+                <li><strong>Access the report:</strong> Once the password is entered, you will gain access to a folder containing:
+                    <ul>
+                        <li><strong>1. <code>&lt;program_code&gt;_report.html</code></strong>: An HTML file providing a comprehensive summary of the predicted student performance for Year 3. This report synthesizes data from Years 1 and 2 to project future GPAs, aiding in academic planning and support strategies.</li>
+                        <li><strong>2. <code>&lt;program_code&gt;_predictions.xlsx</code></strong>: An Excel spreadsheet that includes pseudonymized student IDs alongside their forecasted Year 3 GPA. This format ensures straightforward access and review of the data for academic and program leaders.</li>
+                    </ul>
+                    
+                </li>
+                <li><strong>Conversion of pseudonymized IDs:</strong> To convert pseudonymized student IDs to actual student IDs, please contact the OCIO by sending the masked pseudo-IDs to Kevin Cheung (<a href="mailto:kywcheung@eduhk.hk">kywcheung@eduhk.hk</a>) to request the corresponding actual student IDs.</li>
+            </ul>
+
+            <p>If you encounter any issues accessing your report or need further assistance, you can contact the <a href="about_us.html"> the technical team </a> or OCIO.</p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="content-container">
+            <h2>Glossary</h2>
+            <p>This glossary provides clear definitions for key terms used throughout the program analysis, may helping you better understand the report's findings.</p>
+
+            <h3>Data Related Terms</h3>
+            <ul>
+                <li><strong>Training Data:</strong> The dataset used to train the lasso regression model for a given cohort cycle. It consists of data from the three consecutive cohorts that immediately precede the test cohort. For example, for predicting the 2020 test cohort in a 5-year program, the training data would come from the 2017, 2018, and 2019 cohorts.</li>
+                <li><strong>Test Data:</strong> The dataset used to evaluate an already-trained lasso regression model for a given cohort cycle. The test cohort is the fourth consecutive cohort, following the three cohorts in the training data. For example, the model for the 2020 cohort is trained on data from the 2017, 2018, and 2019 cohorts, and the 2020 cohort data is used solely for testing, not training.</li>
+                <li><strong>Cohort:</strong> A group of students who began their academic program in the same year. For example, the 2016 cohort refers to students who started their first year in 2016.</li>
+                <li><strong>Cohort Size:</strong> The total number of students in a specified cohort. For instance, the 2016 cohort might consist of 35 students in a particular program.</li>
+            </ul>
+
+            <h3>Model Related Terms</h3>
+            <ul>
+                <li><strong>Target Column:</strong> The outcome variable the model is designed to predict. In this project, it is the Year 3 (Y3) GPA of students.</li>
+                <li><strong>Predictor:</strong> Any variable in the model that helps predict the target outcome (e.g., Year 3 or Graduating GPA). Predictors might include previous year GPAs, course grades, and other relevant features.</li>
+                <li><strong>Y3 GPA Prediction:</strong> The predicted GPA of a student at the end of Year 3, calculated by the model using training data.</li>
+                <li><strong>At-risk Student:</strong> A student predicted by the model to have a GPA below a cutoff point (typically 2.5) at the end of Year 3. These students are flagged for potential academic interventions.</li>
+                <li><strong>Cut-off:</strong> A predetermined GPA threshold (typically 2.5) used to classify students as at-risk or normal. This cutoff may be adjusted by the model to optimize predictions.</li>
+                <li><strong>Optimal Cut-off:</strong> The GPA threshold fine-tuned by the model to best separate at-risk students from normal students, minimizing missed detections and false alarms. While the default is 2.5, the model may adjust this threshold for optimal performance.</li>
+            </ul>
+
+            <h3>Evaluation Metrics</h3>
+            <ul>
+                <li><strong>Accuracy:</strong> The proportion of correct predictions made by the model, calculated as the number of accurate predictions divided by the total number of students. The model’s accuracy typically ranges between 90% and 100%.</li>
+                <li><strong>MSE (Mean Squared Error):</strong> A measure of the average squared difference between predicted and actual GPA values. A lower MSE indicates better model performance.</li>
+                <li><strong>Missed Detection:</strong> When a student is incorrectly predicted to be normal (GPA above 2.5), but their actual GPA falls at or below the 2.5 threshold.</li>
+                <li><strong>False Alarm:</strong> When a student is predicted to be at-risk (GPA below 2.5), but their actual GPA is higher than 2.5.</li>
+                <li><strong>True Positives (TP):</strong> The number of students correctly identified as at-risk.</li>
+                <li><strong>True Negatives (TN):</strong> The number of students correctly identified as not at-risk.</li>
+                <li><strong>False Positives (FP):</strong> The number of students incorrectly predicted as at-risk.</li>
+                <li><strong>False Negatives (FN):</strong> The number of students incorrectly predicted as not at-risk.</li>
+            </ul>
+        </div>
+    </section>
+
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="content-container">
+            <!-- Embed Feedback Form -->
+            <h2>Program Leader Feedback Form</h2>
+            <p>Program leaders are encouraged to submit their feedback form within 1 month of receiving and reviewing the program analysis report. Your feedback will help us improve future iterations of the analysis and intervention strategies.</p>
+            <p>We value your feedback! After reading your program report, please take a moment to provide your insights on the analysis results by filling out the form below:</p>
+
+            <iframe width="990px" height="650px" src="https://forms.office.com/r/Mp7km57h61?embed=true" frameborder="0" marginwidth="0" marginheight="0" 
+            style="border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> 
+            </iframe>
+        </div>
+    </section>
+    
+    
+    
+    <!-- Back to Top link with an icon -->
+    <a href="#top" id="back-to-top" title="Back to Top">&uarr; Back to Top</a>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <p><strong>TDG Project</strong> - An automated platform for early identification of at-risk students</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+<style>
+    /* General Styles for All Pages */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 15px;
+        padding: 15px;
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    /* Header Styles */
+    header {
+        background-color: #ffffff; /* White background for the header */
+        color: #333; /* Dark text for readability */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    }
+
+    .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 20px;
+        background-color: #ffffff;
+    }
+
+    .header-top h1 {
+        font-size: 25px;            /* Larger font size */
+        color: #004b2d;             /* Green color for the text */
+        text-align: center;         /* Center the text */
+        padding: 0px 0px;            /* Padding above and below the text */
+        margin: 0;                  /* Remove any default margin */
+    }
+
+
+    nav {
+        width: auto;
+        background-color: #ffffff; /* Light grey background for nav */
+        padding: 10px 50px; /* Matching horizontal padding with header */
+        border-bottom: 3px solid #7bb29c;
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-around; /* Distributes space evenly around each nav item */
+    }
+
+    nav a {
+        text-decoration: none;
+        color: #004b2d; /* Dark green, consistent with header */
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    nav a:hover {
+        text-decoration: underline;
+    }
+
+    .logo {
+        height: 70px; /* Adjust size as needed */
+        width: auto;
+        padding: auto;
+    }
+
+
+    /* Simplified Content Section Layout */
+    .content-section {
+        display: block; /* Change to block layout for a single column */
+        padding: 20px 20px; /* Adjusted padding */
+        background-color: #f9fafb;
+        width:100%
+    }
+
+    .content-container {
+        max-width: 1500px;
+        margin: auto;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+        background: white; /* White background for better contrast */
+        border-radius: 10px; /* Rounded corners */
+    }
+
+    .report-blocks {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 20px;
+    }
+
+    .report-block {
+        width: 200px;
+        padding: 20px;
+        background-color: #f5f5f5;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .report-block a {
+        text-decoration: none;
+        color: #004b2d;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .report-block:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+   
+     /* Footer Styles */
+     footer {
+        background-color: white;
+        padding: 10px 0;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    footer p {
+        font-size: 14px;
+        color: #004b2d;
+        margin: 0;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        nav ul {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        nav ul li {
+            margin: 5px 0;
+        }
+    }
+
+    #back-to-top {
+        position: fixed;
+        bottom: 20px;    /* Distance from bottom */
+        right: 20px;     /* Distance from right */
+        padding: 10px 20px;
+        background-color: #004b2d; /* Blue background */
+        color: white;    /* White text */
+        text-decoration: none; /* No underline */
+        border-radius: 5px; /* Rounded corners */
+        font-size: 15px; /* Font size */
+        opacity: 0.7; /* Slightly transparent */
+        font-weight: bold; /* Bold text */
+        transition: opacity 0.3s; /* Smooth transition for hover effect */
+    }
+
+    #back-to-top:hover {
+        opacity: 1; /* Fully opaque on hover */
+    }
+
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Select only external links (those starting with http:// or https://)
+        var externalLinks = document.querySelectorAll('a[href^="http"], a[href^="https"]');
+        
+        externalLinks.forEach(function(link) {
+            if (!link.closest('nav')) {
+                link.target = '_blank';
+            }
+        });
+    });
+</script>

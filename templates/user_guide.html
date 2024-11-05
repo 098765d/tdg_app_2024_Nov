@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TDG Project: Program Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-top">
+            <img src="https://github.com/098765d/dualPredictor/blob/main/img/EdUHK_Signature_RGB.png?raw=true" alt="Logo" class="logo">
+            <h1>Program Analysis: An Automated Platform for Early Identification of At-risk Students</h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="report_portal.html"><i class="fa fa-file-alt"></i> Report Portal</a></li>
+            <li><a href="about_us.html"><i class="fa fa-user"></i> About Us</a></li>
+            <li><a href="user_guide.html"><i class="fa fa-book"></i> User Guide</a></li>
+        </ul>
+    </nav>
+
+    <section class="content-section">
+        <div class="content-container">
+            <h2>User Guide</h2>
+            <p>Access the complete user guide below:</p>
+            <div class="pdf-container">
+                <iframe src="https://uedhk-my.sharepoint.com/personal/cdong_eduhk_hk/_layouts/15/embed.aspx?UniqueId=fdde6256-a6f4-4c52-b175-6e99e41cf135" 
+                width="900" height="700" 
+                frameborder="0" scrolling="no" 
+                allowfullscreen title="Web Portal User Guide"></iframe>
+            </div>
+            <p>If you want to download the file, click the button below to open the download page. The download button is located in the top left corner.</p>
+            <a href="https://uedhk-my.sharepoint.com/:b:/g/personal/cdong_eduhk_hk/EVZi3v30plJMsXVumeQc8TUBBPLcrq_Um-YJhdn--MXB_w?e=6tjNGj" download>
+                <button>Download User Guide</button>
+            </a>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="content-container">
+            <h2>Project Briefing Video Recording (November 5, 2024)</h2>
+
+            <div class="video-container">
+                <iframe width="1100" height="600" src="https://www.youtube.com/embed/BmPavZcCRn0?si=8lwfbMgZT9PjzVTj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    
+    
+    
+    
+    <!-- Back to Top link with an icon -->
+    <a href="#top" id="back-to-top" title="Back to Top">&uarr; Back to Top</a>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <p><strong>TDG Project</strong> - An automated platform for early identification of at-risk students</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+<style>
+    /* General Styles for All Pages */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 15px;
+        padding: 15px;
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    /* Header Styles */
+    header {
+        background-color: #ffffff; /* White background for the header */
+        color: #333; /* Dark text for readability */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    }
+
+    .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 20px;
+        background-color: #ffffff;
+    }
+
+    .header-top h1 {
+        font-size: 25px;            /* Larger font size */
+        color: #004b2d;             /* Green color for the text */
+        text-align: center;         /* Center the text */
+        padding: 0px 0px;            /* Padding above and below the text */
+        margin: 0;                  /* Remove any default margin */
+    }
+
+
+    nav {
+        width: auto;
+        background-color: #ffffff; /* Light grey background for nav */
+        padding: 10px 50px; /* Matching horizontal padding with header */
+        border-bottom: 3px solid #7bb29c;
+    }
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-around; /* Distributes space evenly around each nav item */
+    }
+
+    nav a {
+        text-decoration: none;
+        color: #004b2d; /* Dark green, consistent with header */
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    nav a:hover {
+        text-decoration: underline;
+    }
+
+    .logo {
+        height: 70px; /* Adjust size as needed */
+        width: auto;
+        padding: auto;
+    }
+
+
+    /* Simplified Content Section Layout */
+    .content-section {
+        display: block; /* Change to block layout for a single column */
+        padding: 20px 20px; /* Adjusted padding */
+        background-color: #f9fafb;
+    }
+
+    .content-container {
+        max-width: 1500px;
+        margin: auto;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+        background: white; /* White background for better contrast */
+        border-radius: 10px; /* Rounded corners */
+    }
+
+
+
+    body {
+        font-family: 'Arial', sans-serif; /* Makes text more readable with a clean, sans-serif font */
+        color: #333; /* Dark grey color for better readability */
+    }
+
+    button {
+    background-color: #004b2d; 
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px; /* Increased font size */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */}
+
+    button:hover{
+        background-color: #00703c; /* Darker green color on hover */}
+
+   
+     /* Footer Styles */
+    footer {
+        background-color: white;
+        padding: 10px 0;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    footer p {
+        font-size: 14px;
+        color: #004b2d;
+        margin: 0;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        nav ul {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        nav ul li {
+            margin: 5px 0;
+        }
+    }
+
+    #back-to-top {
+        position: fixed;
+        bottom: 20px;    /* Distance from bottom */
+        right: 20px;     /* Distance from right */
+        padding: 10px 20px;
+        background-color: #004b2d; /* Blue background */
+        color: white;    /* White text */
+        text-decoration: none; /* No underline */
+        border-radius: 5px; /* Rounded corners */
+        font-size: 15px; /* Font size */
+        opacity: 0.7; /* Slightly transparent */
+        font-weight: bold; /* Bold text */
+        transition: opacity 0.3s; /* Smooth transition for hover effect */
+    }
+
+    #back-to-top:hover {
+        opacity: 1; /* Fully opaque on hover */
+    }
+
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Select only external links (those starting with http:// or https://)
+        var externalLinks = document.querySelectorAll('a[href^="http"], a[href^="https"]');
+        
+        externalLinks.forEach(function(link) {
+            if (!link.closest('nav')) {
+                link.target = '_blank';
+            }
+        });
+    });
+</script>
+    
+
+
+
